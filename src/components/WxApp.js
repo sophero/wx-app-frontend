@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Geolocate from './Geolocate';
-// import axios from 'axios';
+import CurrentWx from './CurrentWx';
+import GetLocation from './GetLocation';
 
 class WxApp extends Component {
     constructor() {
@@ -13,17 +14,25 @@ class WxApp extends Component {
     }
 
     render() {
+        let currentWx;
+        if (this.state.lat && this.state.lng) {
+            currentWx =
+                <CurrentWx
+                    lat={this.state.lat}
+                    lng={this.state.lng}
+                />
+        }
         return(
             <div>
-                <h1> Working...</h1>
                 <Geolocate setCoords={this.setCoords} />
                 <div>
                     Current coordinates:
                     Lat: {this.state.lat}
                     Lng: {this.state.lng}
                 </div>
+                <GetLocation setCoords={this.setCoords} />
+                {currentWx}
             </div>
-
         )
     }
 

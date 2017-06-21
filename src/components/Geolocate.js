@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { geolocated } from 'react-geolocated';
 
 class Geolocate extends Component {
+  constructor(props){
+      super(props);
+      this.handleSetCoords = this.handleSetCoords.bind(this);
+  }
+
   render() {
     return !this.props.isGeolocationAvailable
       ? <div>Your browser does not support Geolocation</div>
@@ -15,7 +20,7 @@ class Geolocate extends Component {
                   <tr><td>longitude</td><td>{this.props.coords.longitude}</td></tr>
                 </tbody>
               </table>
-              <button onClick={() => this.handleSetCoords()}>Use this location</button>
+              <button onClick={this.handleSetCoords}>Use this location</button>
             </div>
           : <div>Getting the location data&hellip; </div>;
   }
