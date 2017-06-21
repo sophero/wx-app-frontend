@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Geolocate from './Geolocate';
 import CurrentWx from './CurrentWx';
-import GetLocation from './GetLocation';
+import InputLocation from './InputLocation';
 
 class WxApp extends Component {
     constructor() {
         super();
         this.state = {
             lat: null,
-            lng: null
+            lng: null,
+            address: ""
         }
         this.setCoords = this.setCoords.bind(this);
     }
@@ -20,18 +21,20 @@ class WxApp extends Component {
                 <CurrentWx
                     lat={this.state.lat}
                     lng={this.state.lng}
+                    address={this.state.address}
                 />
         }
         return(
             <div>
                 <Geolocate setCoords={this.setCoords} />
+                <InputLocation setCoords={this.setCoords} />
+                {currentWx}
                 <div>
-                    Current coordinates:
                     Lat: {this.state.lat}
+                </div>
+                <div>
                     Lng: {this.state.lng}
                 </div>
-                <GetLocation setCoords={this.setCoords} />
-                {currentWx}
             </div>
         )
     }
@@ -39,7 +42,8 @@ class WxApp extends Component {
     setCoords(props) {
         this.setState({
             lat: props.lat,
-            lng: props.lng
+            lng: props.lng,
+            address: props.address
         });
     }
 

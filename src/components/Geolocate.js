@@ -28,7 +28,8 @@ class Geolocate extends Component {
   handleSetCoords() {
       this.props.setCoords({
           lat: this.props.coords.latitude,
-          lng: this.props.coords.longitude
+          lng: this.props.coords.longitude,
+          address: "Your location"
       });
   }
 

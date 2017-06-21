@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class GetLocation extends Component {
+class InputLocation extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            errorMsg: "",
+            inputAddress: "",
             address: "",
-            formattedAddress: "",
             lat: null,
             lng: null
         }
-        this.updateAddress = this.updateAddress.bind(this);
+        this.updateInputAddress = this.updateInputAddress.bind(this);
         this.getCoords = this.getCoords.bind(this);
         this.handleSetCoords = this.handleSetCoords.bind(this);
     }
@@ -21,25 +22,27 @@ class GetLocation extends Component {
                 <p>Enter address / location:</p>
                 <input
                     type="text"
-                    onChange={this.updateAddress}
-                    value={this.state.address}
+                    onChange={this.updateInputAddress}
+                    value={this.state.inputAddress}
                     placeholder="Enter address/location"
                 />
                 <button onClick={this.getCoords}>Enter</button>
+                <div>{this.state.errorMsg}</div>
             </div>
         );
     }
 
-    updateAddress(event) {
-        this.setState({ address: event.target.value });
+    updateInputAddress(event) {
+        this.setState({ inputAddress: event.target.value });
     }
 
     getCoords() {
-        let encodedAddress = encodeURIComponent(this.state.address);
+        let encodedAddress = encodeURIComponent(this.state.inputAddress);
         let geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`;
 
         axios.get(geocodeUrl).then((response) => {
             if (response.data.status === 'ZERO_RESULTS') {
+                // this.setState({ errorMsg: 'Unable to find address.' });
                 throw new Error('Unable to find address.');
             }
 
@@ -47,17 +50,18 @@ class GetLocation extends Component {
             console.log(location);
             console.log(response.data.results[0].formatted_address);
             this.setState({
+                errorMsg: "",
                 lat: location.lat,
                 lng: location.lng,
-                formattedAddress: response.data.results[0].formatted_address
+                address: response.data.results[0].formatted_address
             },
             this.handleSetCoords);
 
         }).catch((error) => {
             if (error.code === 'ENOTFOUND') {
-                console.log('Unable to connect to API servers.');
+                this.setState({ errorMsg: 'Unable to connect to API servers.' });
             } else {
-                console.log(error.message);
+                this.setState({ errorMsg: error.message })
             }
         });
     }
@@ -65,10 +69,10 @@ class GetLocation extends Component {
     handleSetCoords() {
         this.props.setCoords({
             lat: this.state.lat,
-            lng: this.state.lng
+            lng: this.state.lng,
+            address: this.state.address
         });
     }
 }
 
-export default GetLocation;
-//
+export default InputLocation;
