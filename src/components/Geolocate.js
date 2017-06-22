@@ -2,28 +2,40 @@ import React, { Component } from 'react';
 import { geolocated } from 'react-geolocated';
 
 class Geolocate extends Component {
-  constructor(props){
-      super(props);
-      this.handleSetCoords = this.handleSetCoords.bind(this);
-  }
+    constructor(props){
+        super(props);
+    this.handleSetCoords = this.handleSetCoords.bind(this);
+    }
 
-  render() {
-    return !this.props.isGeolocationAvailable
-      ? <div>Your browser does not support Geolocation</div>
-      : !this.props.isGeolocationEnabled
-        ? <div>Geolocation is not enabled</div>
-        : this.props.coords
-          ? <div>
-              <table>
-                <tbody>
-                  <tr><td>latitude</td><td>{this.props.coords.latitude}</td></tr>
-                  <tr><td>longitude</td><td>{this.props.coords.longitude}</td></tr>
-                </tbody>
-              </table>
-              <button onClick={this.handleSetCoords}>Use this location</button>
-            </div>
-          : <div>Getting the location data&hellip; </div>;
-  }
+    render() {
+        if (!this.props.isGeolocationAvailable) {
+            return (
+                <div>Sorry, geolocation is unavailable.</div>
+            );
+        } else {
+            if (!this.props.isGeolocationEnabled) {
+                return(
+                    <div>Geolocation is not enabled.</div>
+                );
+            } else {
+                if (this.props.coords) {
+                    return(
+                        <div>
+                            <h2>Your location</h2>
+                            <div>Latitude: {this.props.coords.latitude}</div>
+                            <div>Longitude: {this.props.coords.longitude}</div>
+                            <button onClick={this.handleSetCoords}>Use this location</button>
+                        </div>
+                    );
+                } else {
+                    return(
+                        <div>Fetching location data..</div>
+                    );
+                }
+
+            }
+        }
+    }
 
   handleSetCoords() {
       this.props.setCoords({
@@ -36,8 +48,6 @@ class Geolocate extends Component {
 }
 
 export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000
+    positionOptions: { enableHighAccuracy: false },
+    userDecisionTimeout: 7000
 })(Geolocate);

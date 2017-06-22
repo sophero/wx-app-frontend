@@ -35,6 +35,17 @@ class WxApp extends Component {
                 <div>
                     Lng: {this.state.lng}
                 </div>
+                <div>
+                    <a href="https://darksky.net/poweredby/" target="_blank">
+                        <div style={{
+                            backgroundImage: "url('https://darksky.net/dev/img/attribution/poweredby.png')",
+                            backgroundPosition: 'center',
+                            backgroundSize: 'contain',
+                            width: 100,
+                            height: 40
+                        }}></div>
+                    </a>
+                </div>
             </div>
         )
     }
