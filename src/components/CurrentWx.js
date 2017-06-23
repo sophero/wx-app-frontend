@@ -8,6 +8,7 @@ class CurrentWx extends Component {
             lat: props.lat,
             lng: props.lng,
             address: props.address,
+            locTime: null,
             sunrise: null,
             sunset: null,
             timezoneName: null,
@@ -43,26 +44,27 @@ class CurrentWx extends Component {
             let dewPointC = this.fahrenheitToCelsius(this.state.wx.dewPoint);
             let kph = this.mphToKph(this.state.wx.windSpeed);
             let knots = this.mphToKnots(this.state.wx.windSpeed);
-            let sunTimes;
+            let locTimes;
 
-            if (this.state.sunrise && this.state.sunset) {
-                sunTimes =
+            if (this.state.sunrise && this.state.sunset && this.state.timezoneName && this.state.locTime) {
+                locTimes =
                 <div>
-                    <div>Sunrise: {this.parseTime(this.state.sunrise)} {this.state.timezoneName}</div>
-                    <div>Sunset: {this.parseTime(this.state.sunset)} {this.state.timezoneName}</div>
+                    <div>As at {this.parseTime(this.state.locTime)} {this.state.timezoneName}</div>
+                    <div>Sunrise: {this.parseTime(this.state.sunrise)}</div>
+                    <div>Sunset: {this.parseTime(this.state.sunset)}</div>
                 </div>
             }
 
             return(
                 <div>
                     <h2>Current weather data</h2>
+                    {locTimes}
                     <div>Location: {this.state.address}</div>
                     <div>Temperature: {this.state.wx.temp} °F; {tempC} °C</div>
                     <div>Dewpoint: {this.state.wx.dewPoint} °F; {dewPointC} °C</div>
                     <div>MSLP: {this.state.wx.pressure} hPa</div>
                     <div>Wind direction: {windStr} {this.state.wx.windBearing}°</div>
                     <div>Wind speed: {knots} knots; {this.state.wx.windSpeed} mph; {kph} kph</div>
-                    {sunTimes}
                 </div>
             );
         } else {
@@ -89,13 +91,10 @@ class CurrentWx extends Component {
 
         let { lat, lng } = this.state;
         axios.get(`/api/timezone_offset/${lat}/${lng}/${curTime}`).then((res) => {
-            // adjustLocalTime(curTime, res.offset, res.sunrise, res.sunset);
-            console.log(res);
             let d = new Date();
             // obtaining user's timezone offset from date string
             let userOffset = parseInt(d.toString().split(' ')[5].substr(3), 10);
-            console.log('useroffset', userOffset);
-            userOffset *= 36; // converting from 0400 hrmin time to seconds
+            userOffset *= 36; // converting from 0400 hrmin format to seconds
 
             // You always forget .data after your response variable!!!!
             let adjustment = res.data.offset - userOffset;
@@ -117,23 +116,6 @@ class CurrentWx extends Component {
             });
 
         });
-    }
-
-    adjustLocalTime(userCurTime, locOffset, locSunrise, locSunset) {
-        // let d = new Date();
-        // // obtaining user's timezone offset from date string, converting to seconds
-        // let userOffset = parseInt(d.toString().split(' ')[5].substr(3), 10);
-        // userOffset *= 3600;
-        // let adjustment = locOffset - userOffset;
-        //
-        // let locTime = userCurTime + adjustment;
-        // locSunrise += adjustment;
-        // locSunset += adjustment;
-        // this.setState({
-        //     locTime: locTime,
-        //     sunrise: locSunrise,
-        //     sunset: locSunset
-        // });
     }
 
     fahrenheitToCelsius(f) {
