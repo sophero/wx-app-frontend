@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+// import GIFParser from 'gifparser';
+// const GIFEncoder = require('gif-enconder');
 
 class CurrentWx extends Component {
     constructor(props) {
@@ -12,7 +14,6 @@ class CurrentWx extends Component {
             sunrise: null,
             sunset: null,
             timezoneName: null,
-            timezoneTime: null,
             wx: null
         }
         this.getCurWx = this.getCurWx.bind(this);
@@ -73,6 +74,24 @@ class CurrentWx extends Component {
 
     }
 
+    // getRadar() {
+    //     let { lat, lng } = this.state;
+    //     axios.get(`/api/radar/${lat}/${lng}`).then((res) => {
+    //         // let gifParser = new GIFParser()
+    //         // console.log(res.data);
+    //         // let parsedGIF = gifParser.parseFromArrayBuffer(res.data);
+    //         // console.log(parsedGIF);
+    //         // let gif = new GIFEncoder(300, 300);
+    //         //
+    //         // gif.addFrame(res.data);
+    //         // gif.writeImageInfo();
+    //         // gif.outputImage();
+    //         // this.setState({
+    //         //     radar: gif
+    //         // });
+    //     });
+    // }
+
     getCurWx() {
         let { lat, lng } = this.state;
         axios.get(`/api/wx/${lat}/${lng}`).then((wxRes) => {
@@ -84,6 +103,7 @@ class CurrentWx extends Component {
                 console.log(d.toString());
             });
             this.getSunTime(sunrise, sunset, curTime);
+            // this.getRadar();
         });
     }
 
