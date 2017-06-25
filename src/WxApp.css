@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,600,700');
+
+@keyframes darken {
+    0% {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}

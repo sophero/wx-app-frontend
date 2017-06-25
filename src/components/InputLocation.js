@@ -14,6 +14,7 @@ class InputLocation extends Component {
         this.updateInputAddress = this.updateInputAddress.bind(this);
         this.getCoords = this.getCoords.bind(this);
         this.handleSetCoords = this.handleSetCoords.bind(this);
+        this.selectAll = this.selectAll.bind(this);
     }
 
     render() {
@@ -22,6 +23,7 @@ class InputLocation extends Component {
                 <p>Enter address / location:</p>
                 <input
                     type="text"
+                    onClick={this.selectAll}
                     onChange={this.updateInputAddress}
                     value={this.state.inputAddress}
                     placeholder="Enter address/location"
@@ -32,12 +34,19 @@ class InputLocation extends Component {
         );
     }
 
+    selectAll(event) {
+        return event.target.select();
+    }
+
     updateInputAddress(event) {
         this.setState({ inputAddress: event.target.value });
     }
 
     getCoords() {
         let encodedAddress = encodeURIComponent(this.state.inputAddress);
+        if (encodedAddress === "") {
+            return;
+        }
         let geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`;
 
         axios.get(geocodeUrl).then((response) => {

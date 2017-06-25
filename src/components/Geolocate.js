@@ -19,20 +19,25 @@ class Geolocate extends Component {
                 );
             } else {
                 if (this.props.coords) {
-                    // this.handleSetMyLocCoords();
-                    let lat = Math.round(this.props.coords.latitude * 1000000) / 1000000;
-                    let lng = Math.round(this.props.coords.longitude * 1000000) / 1000000;
+                    let lat = Math.round(this.props.coords.latitude * 10000) / 10000;
+                    let lng = Math.round(this.props.coords.longitude * 10000) / 10000;
                     return(
                         <div>
-                            <h2>Your location</h2>
+                            <p>or use your location:</p>
                             <div>Latitude: {lat}</div>
                             <div>Longitude: {lng}</div>
-                            <button onClick={this.handleSetCoords}>Use this location</button>
+                            <button style={{
+                                display: "block",
+                                margin: "20px auto 0 auto"
+                            }} onClick={this.handleSetCoords}>Use this location</button>
                         </div>
                     );
                 } else {
                     return(
-                        <div>Fetching location data..</div>
+                        <div
+                            style={{
+                                padding: "10px"
+                            }}>Fetching location data..</div>
                     );
                 }
 
