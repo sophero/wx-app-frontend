@@ -30,22 +30,23 @@ class WxApp extends Component {
         let headerStyle;
 
         let overlayStyle = {
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
+            position: "absolute",
+            // width: "100vw",
+            // height: "100vh",
             top: "0",
             left: "0",
             right: "0",
             bottom: "0",
-            zIndex: "1"
+            zIndex: "1",
+            overflow: "auto"
         };
 
         let backgroundStyle = {
             color: "#fff",
             fontFamily: "Josefin Sans, sans-serif",
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
+            position: "absolute",
+            // width: "100vw",
+            // height: "100vh",
             top: "0",
             left: "0",
             right: "0",
@@ -90,9 +91,8 @@ class WxApp extends Component {
                 // borderRadius: '20px',
                 textAlign: 'center',
                 padding: '20px'
-// #remember
             }
-            overlayStyle.backgroundColor = "rgba(0, 0, 0, 0.5)";
+            overlayStyle.backgroundColor = "rgba(0, 0, 0, 0.6)";
             overlayStyle.animation = "darken 0.6s";
             headerStyle = {
                 fontSize: "1.2em",
@@ -184,7 +184,7 @@ class WxApp extends Component {
                     </div>
                     {darkSkyRef}
                     <div style={{
-                        position: "absolute",
+                        position: "fixed",
                         bottom: "0",
                         right: "0"
                     }}>
