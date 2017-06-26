@@ -20,15 +20,30 @@ class InputLocation extends Component {
     render() {
         return(
             <div>
-                <p>Enter address / location:</p>
+                <p style={{
+                    fontSize: "1.3em"
+                }}>Enter address / location:</p>
                 <input
                     type="text"
                     onClick={this.selectAll}
                     onChange={this.updateInputAddress}
                     value={this.state.inputAddress}
                     placeholder="Enter address/location"
+                    style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.6)",
+                        color: "#e0e0e0",
+                        fontSize: "1.3em",
+                        fontFamily: "verdana",
+                        width: "300px",
+                        height: "40px",
+                        textAlign: "center",
+                        padding: "12px 5px",
+                        border: "1px solid #ffffff",
+                        borderRadius: "4px",
+                        margin: "0 0 5px 0"
+                    }}
                 />
-                <button onClick={this.getCoords}>Enter</button>
+                <button onClick={this.getCoords} className="btn">Enter</button>
                 <div>{this.state.errorMsg}</div>
             </div>
         );

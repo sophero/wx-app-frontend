@@ -23,13 +23,21 @@ class Geolocate extends Component {
                     let lng = Math.round(this.props.coords.longitude * 10000) / 10000;
                     return(
                         <div>
-                            <p>or use your location:</p>
-                            <div>Latitude: {lat}</div>
-                            <div>Longitude: {lng}</div>
-                            <button style={{
-                                display: "block",
-                                margin: "20px auto 0 auto"
-                            }} onClick={this.handleSetCoords}>Use this location</button>
+                            <p style={{
+                                fontSize: "1.2em",
+                                margin: "0 0 15px 0",
+                                padding: "0"
+                            }}>or use your location:</p>
+                            <div style={{
+                                fontSize: "1.3em"
+                            }}>
+                                <div>Latitude: <span style={{ fontWeight: "bold" }}>{lat}</span></div>
+                                <div>Longitude: <span style={{ fontWeight: "bold" }}>{lng}</span></div>
+                            </div>
+                            <button className="btn" style={{
+                                width: "150px",
+                                marginTop: "15px"
+                            }} onClick={this.handleSetCoords}>Use your location</button>
                         </div>
                     );
                 } else {

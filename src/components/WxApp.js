@@ -22,11 +22,10 @@ class WxApp extends Component {
         let latLngDisplay;
         let locChosen;
         let chooseLocDivStyles;
+        let chooseLocElementsStyle;
         let geolocateStyles;
         let inputLocationStyles;
-        let overlay;
         let darkSkyRef;
-        let display;
         let headerStyle;
 
         let overlayStyle = {
@@ -91,10 +90,11 @@ class WxApp extends Component {
                     }}></div>
                 </a>
             chooseLocDivStyles = {
-
+                display: "flex"
+// #remember
             }
             overlayStyle.backgroundColor = "rgba(0, 0, 0, 0.5)";
-            overlayStyle.animation = "darken 0.3s";
+            overlayStyle.animation = "darken 0.6s";
 
             headerStyle = {
                 fontSize: "1.5em",
@@ -102,19 +102,22 @@ class WxApp extends Component {
                 color: "#bbd9d0",
                 lineHeight: "1.5"
             }
+            chooseLocElementsStyle = {
+                width: "100vw"
+            }
             locChosen = true;
         } else {
             locChosen = false;
             headerStyle = {
                 fontSize: "1.5em",
-                margin: "0 auto 40px auto",
+                margin: "0 auto 20px auto",
                 color: "#bbd9d0",
                 lineHeight: "1.5"
             }
             overlayStyle.backgroundColor = "rgba(0, 0, 0, 0.2)";
             chooseLocDivStyles = {
                 position: 'absolute',
-                top: '40%',
+                top: '45%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: '2',
@@ -148,15 +151,21 @@ class WxApp extends Component {
             <div style={backgroundStyle}>
                 <div style={overlayStyle}>
                     <div style={chooseLocDivStyles}>
-                            <h1 style={headerStyle}>
-                                Get current weather data anywhere on the planet.
-                            </h1>
-                        <div stye={{
-                            padding: "10px"
-                        }}>{inputLocation}</div>
-                        <div style={{
-                            padding: "10px"
-                        }}>{geolocate}</div>
+                        <h1 style={headerStyle}>
+                            Get current weather data anywhere on the planet.
+                        </h1>
+                        <div style={chooseLocElementsStyle}>
+                            <div style={{
+                                padding: "10px 0 5px 0",
+                                width: "300px",
+                                margin: "0 auto"
+                            }}>{inputLocation}</div>
+                            <div style={{
+                                padding: "10px 0 5px 0",
+                                width: "300px",
+                                margin: "0 auto"
+                            }}>{geolocate}</div>
+                        </div>
                     </div>
                     {currentWx}
                     {latLngDisplay}
