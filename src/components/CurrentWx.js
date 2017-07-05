@@ -173,7 +173,12 @@ class CurrentWx extends Component {
 
     getCurWx() {
         let { lat, lng } = this.state;
-        axios.get(`/api/wx/${lat}/${lng}`).then((wxRes) => {
+        axios.get('/api/wx', {
+            params: {
+                lat: lat,
+                lng: lng
+            }
+        }).then((wxRes) => {
             this.setState({ wx: wxRes.data.curWx });
 
             let { sunrise, sunset, curTime } = wxRes.data;
@@ -183,6 +188,7 @@ class CurrentWx extends Component {
             });
             this.getSunTime(sunrise, sunset, curTime);
             // this.getRadar();
+            console.log(wxRes);
         });
         setTimeout(this.getCurWx, 60000);
     }
@@ -190,13 +196,17 @@ class CurrentWx extends Component {
     getSunTime(sunrise, sunset, curTime) {
 
         let { lat, lng } = this.state;
-        axios.get(`/api/timezone_offset/${lat}/${lng}/${curTime}`).then((res) => {
+        axios.get('/api/timezone_offset', {
+            params: {
+                lat: lat,
+                lng: lng,
+                curTime: curTime
+            }
+        }).then((res) => {
             let d = new Date();
             // obtaining user's timezone offset from date string
             let userOffset = parseInt(d.toString().split(' ')[5].substr(3), 10);
             userOffset *= 36; // converting from 0400 hrmin format to seconds
-
-            // You always forget .data after your response variable!!!!
             let adjustment = res.data.offset - userOffset;
 
             let locTime = curTime + adjustment;
